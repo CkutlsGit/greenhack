@@ -1,22 +1,22 @@
 <template>
-  <div class="map-container">
+  <section class="map-container">
     <div id="map" ref="mapContainer"></div>
-    <div v-if="selectedLocation" class="coordinates">
-      <div style="font-weight:bold; color:#111;">
+    <article v-if="selectedLocation" class="coordinates">
+      <header style="font-weight:bold; color:#111;">
         Координаты:
         {{ selectedLocation.lat ? selectedLocation.lat.toFixed(6) : '' }},
         {{ selectedLocation.lng ? selectedLocation.lng.toFixed(6) : '' }}
-      </div>
-      <div class="location-info" style="color:#222; font-weight:bold;">
+      </header>
+      <footer class="location-info" style="color:#222; font-weight:bold;">
         <template v-if="locationInfo">
           {{ locationInfo }}
         </template>
         <template v-else>
           <span>Город и страна не определены</span>
         </template>
-      </div>
-    </div>
-  </div>
+      </footer>
+    </article>
+  </section>
 </template>
 
 <script setup>

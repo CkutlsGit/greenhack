@@ -5,9 +5,11 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "start": "nuxt start",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "tailwind:build": "tailwindcss -i ./assets/tailwind.css -o ./public/tailwind.css --watch"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.18",
