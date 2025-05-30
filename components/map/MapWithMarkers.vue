@@ -2,9 +2,18 @@
   <div class="map-container">
     <div id="map" ref="mapContainer"></div>
     <div v-if="selectedLocation" class="coordinates">
-      <div>Координаты: {{ selectedLocation.lat.toFixed(6) }}, {{ selectedLocation.lng.toFixed(6) }}</div>
-      <div v-if="locationInfo" class="location-info">
-        {{ locationInfo }}
+      <div style="font-weight:bold; color:#111;">
+        Координаты:
+        {{ selectedLocation.lat ? selectedLocation.lat.toFixed(6) : '' }},
+        {{ selectedLocation.lng ? selectedLocation.lng.toFixed(6) : '' }}
+      </div>
+      <div class="location-info" style="color:#222; font-weight:bold;">
+        <template v-if="locationInfo">
+          {{ locationInfo }}
+        </template>
+        <template v-else>
+          <span>Город и страна не определены</span>
+        </template>
       </div>
     </div>
   </div>
@@ -15,9 +24,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-// Исправление путей к иконкам маркеров для продакшна
-// @ts-ignore
-// eslint-disable-next-line
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -59,13 +65,14 @@ async function getLocationInfo(lat, lng) {
         if (locationString) locationString += ', '
         locationString += country
       }
-      locationInfo.value = locationString || 'Местоположение не определено'
+      locationInfo.value = locationString || 'Город и страна не определены'
     } else {
-      locationInfo.value = 'Местоположение не определено'
+      locationInfo.value = 'Город и страна не определены'
     }
+    console.log('locationInfo:', locationInfo.value)
   } catch (error) {
     console.error('Ошибка при получении информации о местоположении:', error)
-    locationInfo.value = 'Ошибка определения местоположения'
+    locationInfo.value = 'Город и страна не определены'
   }
 }
 
@@ -81,7 +88,6 @@ onMounted(() => {
       minZoom: 3,
       maxZoom: 20
     }).setView([0, 0], 2)
-    // Минималистичный слой CartoDB Positron
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map.value)
@@ -95,6 +101,7 @@ onMounted(() => {
       }
       marker.value = L.marker([lat, lng]).addTo(map.value)
       selectedLocation.value = { lat, lng }
+      console.log('selectedLocation:', selectedLocation.value)
       getLocationInfo(lat, lng)
     })
   }
@@ -129,22 +136,22 @@ onUnmounted(() => {
   position: absolute;
   bottom: 24px;
   left: 24px;
-  background: rgba(255,255,255,0.7);
-  padding: 10px 18px;
-  border-radius: 8px;
-  box-shadow: none;
-  z-index: 10;
-  min-width: 200px;
-  font-size: 1em;
-  color: #222;
+  background: #fff;
+  padding: 14px 22px;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  z-index: 9999;
+  min-width: 220px;
+  font-size: 1.08em;
+  color: #111;
   font-family: 'Inter', Arial, sans-serif;
   letter-spacing: 0.01em;
 }
 
 .location-info {
-  margin-top: 6px;
-  font-size: 0.95em;
-  color: #666;
+  margin-top: 8px;
+  font-size: 1em;
+  color: #222;
 }
 
 .leaflet-control {
