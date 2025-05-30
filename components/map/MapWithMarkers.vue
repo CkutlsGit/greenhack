@@ -1,26 +1,8 @@
-<template>
-  <section class="map-container mt-6">
-    <div id="map" ref="mapContainer"></div>
-    <article v-if="selectedLocation" class="absolute bottom-12 left-1/2 -translate-x-1/2 z-[9999] bg-[#FDFFFD33] rounded-full p-6">
-      <footer class="location-info flex items-center gap-4 cursor-pointer" style="color: #222; font-weight: bold">
-        <img class="bg-[#050E011A] p-5 rounded-full" src="/public/icons/array-back-icon.svg">
-        <template v-if="locationInfo">
-          <div class="bg-[#FDFFFD] rounded-full p-5">
-            <h2 class="text-#050E01 font-inter-tight opacity-50 font-semibold text-3xl">{{ locationInfo }}</h2>
-          </div>
-        </template>
-        <template v-else>
-          <h2>Город и страна не определены</h2>
-        </template>
-        <button :class="{ 'bg-red-800' : locationInfo == 'Город и страна не определены' }" :disabled="locationInfo == 'Город и страна не определены'" class="font-inter-tight text-3xl font-semibold p-5 bg-[#2CAE28] rounded-full text-[#FDFFFD] cursor-pointer">Approve</button>
-      </footer>
-    </article>
-  </section>
-</template>
-
 <script setup>
 import L from "leaflet"
 import "leaflet/dist/leaflet.css"
+
+const emit = defineEmits(['openModal'])
 
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
@@ -113,6 +95,26 @@ onUnmounted(() => {
   }
 })
 </script>
+
+<template>
+  <section class="map-container mt-6">
+    <div id="map" ref="mapContainer"></div>
+    <article v-if="selectedLocation" class="absolute bottom-12 left-1/2 -translate-x-1/2 z-[9999] bg-[#FDFFFD33] rounded-full p-6">
+      <footer class="location-info flex items-center gap-4 cursor-pointer" style="color: #222; font-weight: bold">
+        <img @click="selectedLocation = null" class="bg-[#050E011A] p-5 rounded-full" src="/public/icons/array-back-icon.svg">
+        <template v-if="locationInfo">
+          <div class="bg-[#FDFFFD] rounded-full p-5">
+            <h2 class="text-#050E01 font-inter-tight opacity-50 font-semibold text-3xl">{{ locationInfo }}</h2>
+          </div>
+        </template>
+        <template v-else>
+          <h2>Город и страна не определены</h2>
+        </template>
+        <button @click="$emit('openModal')" :class="{ 'bg-red-800' : locationInfo == 'Город и страна не определены' }" :disabled="locationInfo == 'Город и страна не определены'" class="font-inter-tight text-3xl font-semibold p-5 bg-[#2CAE28] rounded-full text-[#FDFFFD] cursor-pointer">Approve</button>
+      </footer>
+    </article>
+  </section>
+</template>
 
 <style scoped>
 .map-container {
