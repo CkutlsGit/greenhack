@@ -10,7 +10,7 @@ const startGameFunction = async () => {
     body: JSON.stringify({
       location: mainStore.location,
       projectName: mainStore.projectName,
-      idea: mainStore.idea
+      idea: mainStore.idea 
     })
   })
 
