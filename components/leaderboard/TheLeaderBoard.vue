@@ -12,7 +12,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <article class="bg-[#FDFFFD] rounded-3xl p-6 shadow-md h-[800px] w-1/5">
+  <article class="bg-[#FDFFFD] rounded-3xl p-6 shadow-md h-full w-full">
     <h2 class="text-3xl text-[#050E01] mb-8 font-collvetica">Leaderboard</h2>
     <div
       class="grid grid-cols-[50px_1fr_80px_50px] gap-x-2.5 py-2.5 border-b border-[#050E011A] items-center font-bold"
