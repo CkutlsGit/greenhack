@@ -95,9 +95,9 @@ onMounted(() => {
       maxZoom: 20 // Максимальный зум
     }).setView([0, 0], 2);
 
-    // Добавление слоя OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
+    // Добавление минималистичного слоя CartoDB Positron
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map.value)
 
     // Обработчик клика по карте
@@ -129,33 +129,58 @@ onUnmounted(() => {
 
 <style scoped>
 .map-container {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fff;
+  z-index: 0;
 }
 
 #map {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   border: none;
+  background: none;
 }
 
 .coordinates {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background: white;
-  padding: 15px;
+  bottom: 24px;
+  left: 24px;
+  background: rgba(255,255,255,0.7);
+  padding: 10px 18px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 1000;
-  min-width: 250px;
-  font-size: 1.1em;
+  box-shadow: none;
+  z-index: 10;
+  min-width: 200px;
+  font-size: 1em;
+  color: #222;
+  font-family: 'Inter', Arial, sans-serif;
+  letter-spacing: 0.01em;
 }
 
 .location-info {
-  margin-top: 8px;
-  font-size: 1em;
-  color: #444;
+  margin-top: 6px;
+  font-size: 0.95em;
+  color: #666;
+}
+
+.leaflet-control {
+  background: rgba(255,255,255,0.7) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  color: #222 !important;
+  font-weight: bold;
+}
+
+.leaflet-pane, .leaflet-marker-icon, .leaflet-marker-shadow {
+  outline: none !important;
+  box-shadow: none !important;
 }
 </style> 
