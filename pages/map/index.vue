@@ -7,7 +7,7 @@
     <ClientOnly>
       <MapWithMarkers />
     </ClientOnly>
-    <NuxtLayout class="mt-[600px]" name="main-info-blocks"></NuxtLayout>
+    <NuxtLayout class="mt-6" name="main-info-blocks"></NuxtLayout>
   </section>
 </template>
 

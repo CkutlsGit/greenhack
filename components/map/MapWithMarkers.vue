@@ -1,7 +1,7 @@
 <template>
-  <section class="map-container">
+  <section class="map-container mt-6">
     <div id="map" ref="mapContainer"></div>
-    <article v-if="selectedLocation" class="absolute bottom-4 left-1/2 -translate-x-1/2 z-[9999] bg-[#FDFFFD33] rounded-full p-6">
+    <article v-if="selectedLocation" class="absolute bottom-12 left-1/2 -translate-x-1/2 z-[9999] bg-[#FDFFFD33] rounded-full p-6">
       <footer class="location-info flex items-center gap-4 cursor-pointer" style="color: #222; font-weight: bold">
         <img class="bg-[#050E011A] p-5 rounded-full" src="/public/icons/array-back-icon.svg">
         <template v-if="locationInfo">
@@ -116,37 +116,17 @@ onUnmounted(() => {
 
 <style scoped>
 .map-container {
-  width: 100vw;
-  height: 70vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #fff;
-  z-index: 0;
+  width: 100%;
+  height: 80vh;
+  overflow-x: hidden; 
 }
 
 #map {
   width: 100vw;
-  height: 70vh;
+  height: 80vh;
   border: none;
   background: none;
 }
-
-/* .coordinates {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  background: #fff;
-  padding: 14px 22px;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  z-index: 9999;
-  min-width: 220px;
-  font-size: 1.08em;
-  color: #111;
-  font-family: "Inter", Arial, sans-serif;
-  letter-spacing: 0.01em;
-} */
 
 .location-info {
   margin-top: 8px;
