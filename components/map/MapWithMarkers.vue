@@ -1,19 +1,18 @@
 <template>
   <section class="map-container">
     <div id="map" ref="mapContainer"></div>
-    <article v-if="selectedLocation" class="coordinates">
-      <header style="font-weight: bold; color: #111">
-        Координаты:
-        {{ selectedLocation.lat ? selectedLocation.lat.toFixed(6) : "" }},
-        {{ selectedLocation.lng ? selectedLocation.lng.toFixed(6) : "" }}
-      </header>
-      <footer class="location-info" style="color: #222; font-weight: bold">
+    <article v-if="selectedLocation" class="absolute bottom-4 left-1/2 -translate-x-1/2 z-[9999] bg-[#FDFFFD33] rounded-full p-6">
+      <footer class="location-info flex items-center gap-4 cursor-pointer" style="color: #222; font-weight: bold">
+        <img class="bg-[#050E011A] p-5 rounded-full" src="/public/icons/array-back-icon.svg">
         <template v-if="locationInfo">
-          {{ locationInfo }}
+          <div class="bg-[#FDFFFD] rounded-full p-5">
+            <h2 class="text-#050E01 font-inter-tight opacity-50 font-semibold text-3xl">{{ locationInfo }}</h2>
+          </div>
         </template>
         <template v-else>
-          <span>Город и страна не определены</span>
+          <h2>Город и страна не определены</h2>
         </template>
+        <button :class="{ 'bg-red-800' : locationInfo == 'Город и страна не определены' }" :disabled="locationInfo == 'Город и страна не определены'" class="font-inter-tight text-3xl font-semibold p-5 bg-[#2CAE28] rounded-full text-[#FDFFFD] cursor-pointer">Approve</button>
       </footer>
     </article>
   </section>
@@ -45,7 +44,7 @@ async function getLocationInfo(lat, lng) {
     const data = await response.json()
 
     if (data.address) {
-      const city = data.address.city || data.address.town || ""
+      const city = data.address.city || ""
       const region =
         data.address.state || data.address.region || data.address.county || ""
       const country = data.address.country || ""
@@ -118,7 +117,7 @@ onUnmounted(() => {
 <style scoped>
 .map-container {
   width: 100vw;
-  height: 100vh;
+  height: 70vh;
   position: fixed;
   top: 0;
   left: 0;
@@ -128,12 +127,12 @@ onUnmounted(() => {
 
 #map {
   width: 100vw;
-  height: 100vh;
+  height: 70vh;
   border: none;
   background: none;
 }
 
-.coordinates {
+/* .coordinates {
   position: absolute;
   bottom: 24px;
   left: 24px;
@@ -147,7 +146,7 @@ onUnmounted(() => {
   color: #111;
   font-family: "Inter", Arial, sans-serif;
   letter-spacing: 0.01em;
-}
+} */
 
 .location-info {
   margin-top: 8px;
