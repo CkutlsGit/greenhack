@@ -23,10 +23,3 @@ body {
     font-family: "Inter Tight", sans-serif;
     font-feature-settings: 'dlig' on;
 }
-
-.gradient-logo {
-    background: linear-gradient(180deg, #2DDF65 0%, #0B5D25 186.32%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}

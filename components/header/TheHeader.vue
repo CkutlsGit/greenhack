@@ -54,7 +54,7 @@ const googleAuth = () => {
       <div class="header__logo">
         <h1 class="text-[#050E0154] text-3xl font-collvetica leading-5">
           Death By <br>
-          <span class="gradient-logo text-4xl">AI CO Founder</span>
+          <span class="text-[#2CAE28] text-4xl">AI CO Founder</span>
         </h1>
       </div>
       <div v-if="!authToken" class="header__buttons flex gap-8">
