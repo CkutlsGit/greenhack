@@ -3,9 +3,8 @@
 </script>
 
 <template>
-  <div>
-    <h1>TEST123 test</h1>
-  </div>
+  <NuxtLayout />
+  <NuxtPage />
 </template>
 
 <style scoped>
