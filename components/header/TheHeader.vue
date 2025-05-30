@@ -11,10 +11,7 @@ onMounted(async () => {
 
     SetCookie('authtoken', response.authToken)
 
-    const url = { ...route.query }
-    delete url.code, url.scope, url.authuser, url.prompt
-
-    await router.replace({ query: url })
+    await router.replace({ query: {} })
   }
   else {
     const response = await $fetch(`${ config.public.apikey }/auth/google/url`)
