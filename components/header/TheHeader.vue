@@ -12,7 +12,7 @@ onMounted(async () => {
     SetCookie('authtoken', response.authToken)
 
     const url = { ...route.query }
-    delete url.code
+    delete url.code, url.scope, url.authuser, url.prompt
 
     await router.replace({ query: url })
   }
