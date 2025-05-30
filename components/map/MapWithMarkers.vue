@@ -110,12 +110,12 @@ onUnmounted(() => {
         <template v-else>
           <h2>Город и страна не определены</h2>
         </template>
-        <button @click="$emit('openModal')" :class="{ 'bg-red-800' : locationInfo == 'Город и страна не определены' }" :disabled="locationInfo == 'Город и страна не определены'" class="font-inter-tight text-3xl font-semibold p-5 bg-[#2CAE28] rounded-full text-[#FDFFFD] cursor-pointer">Approve</button>
+        <button @click="$emit('openModal', locationInfo)" :class="{ 'bg-red-800' : locationInfo == 'Город и страна не определены' }" class="font-inter-tight text-3xl font-semibold p-5 bg-[#2CAE28] rounded-full text-[#FDFFFD] cursor-pointer">Approve</button>
       </footer>
     </article>
   </section>
 </template>
-
+<!-- :disabled="locationInfo == 'Город и страна не определены'" -->
 <style scoped>
 .map-container {
   width: 100%;

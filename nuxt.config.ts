@@ -8,7 +8,11 @@ export default defineNuxtConfig({
     }
   },
   css: ['~/assets/css/global.css'],
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/google-fonts',
+    '@pinia/nuxt'
+  ],
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css'
   },
@@ -16,5 +20,8 @@ export default defineNuxtConfig({
     families: {
       'Inter Tight': true
     }
-  }
+  },
+  pinia: {
+    storesDirs: ['./stores/**', './custom-folder/stores/**'],
+  },
 })
