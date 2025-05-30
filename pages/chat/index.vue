@@ -1,23 +1,42 @@
 <script setup lang="ts">
+
+// Define isMobile, isLaptop, and isDesktop as reactive variables
+const isMobile = ref(window.innerWidth <= 768);
+const isLaptop = ref(window.innerWidth > 768 && window.innerWidth <= 1024);
+const isDesktop = ref(window.innerWidth > 1024);
+
+// Update isMobile, isLaptop, and isDesktop on window resize
+window.addEventListener('resize', () => {
+    isMobile.value = window.innerWidth <= 768;
+    isLaptop.value = window.innerWidth > 768 && window.innerWidth <= 1024;
+    isDesktop.value = window.innerWidth > 1024;
+});
 </script>
 
 <template>
-  <div class="bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center p-4">
-    <section
-      class="relative w-full max-w-8xl h-[80vh] rounded-[10px] shadow-2xl overflow-hidden"
-    >
-      <img
-        src="@/assets/img/storm-img.png"
-        alt="Earth"
-        class="absolute inset-0 h-full w-full object-contain"
-      />
+    <div class="bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center p-4">
+        <section
+            class="relative w-full max-w-8xl h-[80vh] rounded-[10px] shadow-2xl overflow-hidden"
+        >
+            <img
+                src="@/assets/img/storm-img.png"
+                alt="Earth"
+                class="absolute inset-0 h-full w-full object-contain"
+            />
 
-      <!-- Таблица над роботом -->
-    <div class="absolute bottom-[520px] right-[200px] bg-white p-8 rounded shadow-lg z-20 w-[400px] h-[150px] flex items-center">
-      <p class="text-base text-gray-600">
-        Пример текста: "Привет! Как я могу помочь вам сегодня?"
-      </p>
-    </div>
+            <!-- Таблица над роботом -->
+            <div 
+                class="absolute bg-white p-8 rounded shadow-lg z-20 w-[400px] h-[150px] flex items-center"
+                :class="{
+                    'bottom-[520px] right-[200px]': isDesktop,
+                    'bottom-[300px] right-[100px]': isLaptop,
+                    'bottom-[20px] right-[20px]': isMobile
+                }"
+            >
+                <p class="text-base text-gray-600">
+                    <span class="text-blue-500 font-semibold">Юзер:</span> Пример текста: "Привет! Как я могу помочь вам сегодня?"
+                </p>
+            </div>
 
       <!-- Таблица слева -->
       <div class="absolute top-10 left-10 bg-white p-4 rounded shadow-md z-20 w-[40%] h-[70%] overflow-auto">
