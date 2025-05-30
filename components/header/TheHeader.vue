@@ -1,5 +1,25 @@
 <script setup>
+const config = useRuntimeConfig()
+const route = useRoute()
 
+const url = ref('')
+
+onMounted(async () => {
+  if (route.query.code) {
+    const response = await $fetch(`${ config.public.apikey }/auth/google/callback?code=${ route.query.code }`) 
+
+    console.log(response)
+  }
+  else {
+    const response = await $fetch(`${ config.public.apikey }/auth/google/url`)
+  
+    url.value = response.url
+  }
+})
+
+const googleAuth = () => {
+  window.open(url.value, '_self')
+}
 </script>
 
 <template>
@@ -12,8 +32,8 @@
         </h1>
       </div>
       <div class="header__buttons flex gap-8">
-        <button class="capitalize text-[#050E01] font-medium text-3xl font-inter-tight cursor-pointer">sign up</button>
-        <button class="capitalize text-[#F2F7F1] bg-[#050E01] py-5 px-10 rounded-full font-medium text-3xl font-inter-tight cursor-pointer">log in</button>
+        <button @click="googleAuth" class="capitalize text-[#050E01] font-medium text-3xl font-inter-tight cursor-pointer">sign up</button>
+        <button @click="googleAuth" class="capitalize text-[#F2F7F1] bg-[#050E01] py-5 px-10 rounded-full font-medium text-3xl font-inter-tight cursor-pointer">log in</button>
       </div>
     </nav>
   </header>
