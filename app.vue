@@ -1,11 +1,11 @@
 <script setup>
-import MapWithMarkers from '~/components/MapWithMarkers.vue'
+// импорт не нужен, Nuxt сам найдёт компонент
 </script>
 
 <template>
-  <client-only>
+  <ClientOnly>
     <MapWithMarkers />
-  </client-only>
+  </ClientOnly>
 </template>
 
 <style>

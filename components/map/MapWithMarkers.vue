@@ -10,55 +10,45 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
 // Исправление путей к иконкам маркеров для продакшна
 // @ts-ignore
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+// eslint-disable-next-line
+delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
-const mapContainer = ref<HTMLElement | null>(null)
-const map = ref<L.Map | null>(null)
-const marker = ref<L.Marker | null>(null)
-const selectedLocation = ref<{ lat: number; lng: number } | null>(null)
-const locationInfo = ref<string>('')
+const mapContainer = ref(null)
+const map = ref(null)
+const marker = ref(null)
+const selectedLocation = ref(null)
+const locationInfo = ref('')
 
-// Функция для получения информации о местоположении
-async function getLocationInfo(lat: number, lng: number) {
+async function getLocationInfo(lat, lng) {
   try {
     const response = await fetch(
       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=10&addressdetails=1&accept-language=ru`
     )
     const data = await response.json()
-    
     if (data.address) {
-      // Собираем информацию о населенном пункте
       const city = data.address.city || 
                   data.address.town || 
                   data.address.village || 
                   data.address.hamlet || 
                   data.address.suburb || 
                   data.address.municipality || 
-                  data.address.state_district || 
-                  ''
-
-      // Собираем информацию о регионе/области
+                  data.address.state_district || ''
       const region = data.address.state || 
                     data.address.region || 
-                    data.address.county || 
-                    ''
-
-      // Получаем страну
+                    data.address.county || ''
       const country = data.address.country || ''
-
-      // Формируем строку с информацией
       let locationString = ''
       if (city) locationString += city
       if (region && region !== city) {
@@ -69,52 +59,42 @@ async function getLocationInfo(lat: number, lng: number) {
         if (locationString) locationString += ', '
         locationString += country
       }
-
       locationInfo.value = locationString || 'Местоположение не определено'
     } else {
       locationInfo.value = 'Местоположение не определено'
     }
   } catch (error) {
     console.error('Ошибка при получении информации о местоположении:', error)
-    locationInfo.value = 'Ошибка определения местоположенияв'
+    locationInfo.value = 'Ошибка определения местоположения'
   }
 }
 
 onMounted(() => {
-  if (mapContainer.value) {
-    // Ограничения карты
-    const southWest = L.latLng(-85, -180);
-    const northEast = L.latLng(85, 180);
-    const bounds = L.latLngBounds(southWest, northEast);
-
+  if (typeof window !== 'undefined' && mapContainer.value) {
+    const southWest = L.latLng(-85, -180)
+    const northEast = L.latLng(85, 180)
+    const bounds = L.latLngBounds(southWest, northEast)
     map.value = L.map(mapContainer.value, {
-      maxBounds: bounds, // Ограничение перемещения
-      maxBoundsViscosity: 1.0, // Жесткое ограничение
-      worldCopyJump: true, // Копия мира при прокрутке
-      minZoom: 3, // Минимальный зум
-      maxZoom: 20 // Максимальный зум
-    }).setView([0, 0], 2);
-
-    // Добавление минималистичного слоя CartoDB Positron
+      maxBounds: bounds,
+      maxBoundsViscosity: 1.0,
+      worldCopyJump: true,
+      minZoom: 3,
+      maxZoom: 20
+    }).setView([0, 0], 2)
+    // Минималистичный слой CartoDB Positron
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map.value)
-
-    // Обработчик клика по карте
-    map.value.on('click', (e: L.LeafletMouseEvent) => {
-      const { lat, lng } = e.latlng;
-      // Проверяем, что координаты в допустимых пределах
+    map.value.on('click', (e) => {
+      const { lat, lng } = e.latlng
       if (lat < -85 || lat > 85 || lng < -180 || lng > 180) {
-        return; // Не ставим метку
+        return
       }
-      // Удаляем предыдущую метку, если она есть
       if (marker.value) {
         marker.value.remove()
       }
-      // Создаем новую метку
-      marker.value = L.marker([lat, lng]).addTo(map.value!)
+      marker.value = L.marker([lat, lng]).addTo(map.value)
       selectedLocation.value = { lat, lng }
-      // Получаем информацию о местоположении
       getLocationInfo(lat, lng)
     })
   }
