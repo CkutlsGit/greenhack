@@ -18,12 +18,14 @@
         class="absolute -mt-15 left-1/2 -translate-x-1/2"
         src="@/assets/img/earth-img.png"
       />
-      <button
+      <NuxtLink to="/map">
+        <button
         class="bg-[#fdfffd33] bottom-0 left-1/2 -translate-x-1/2 cursor-pointer text-[#FDFFFD] font-semibold text-3xl font-inter-tight -mt-40 flex items-center rounded-full py-5 px-10 absolute"
       >
         Create a business
         <img class="ml-6" src="@/assets/img/array-forward-icon.svg" />
       </button>
+      </NuxtLink>
       <img
         class="absolute bottom-1/6 left-1/9"
         src="@/assets/img/array-icon.svg"
