@@ -4,12 +4,17 @@ const route = useRoute()
 const router = useRouter()
 
 const url = ref('')
+const authToken = ref('')
 
 onMounted(async () => {
-  if (route.query.code) {
+  authToken.value = GetCookie('authtoken')
+  
+  if (!authToken.value) {
+    if (route.query.code) {
     const response = await $fetch(`${ config.public.apikey }/auth/google/callback?code=${ route.query.code }`) 
 
     SetCookie('authtoken', response.authToken)
+    authToken.value = GetCookie('authtoken')
 
     await router.replace({ query: {} })
   }
@@ -17,6 +22,7 @@ onMounted(async () => {
     const response = await $fetch(`${ config.public.apikey }/auth/google/url`)
   
     url.value = response.url
+  }
   }
 })
 
@@ -34,9 +40,13 @@ const googleAuth = () => {
           <span class="gradient-logo text-4xl">AI CO Founder</span>
         </h1>
       </div>
-      <div class="header__buttons flex gap-8">
+      <div v-if="!authToken" class="header__buttons flex gap-8">
         <button @click="googleAuth" class="capitalize text-[#050E01] font-medium text-3xl font-inter-tight cursor-pointer">sign up</button>
         <button @click="googleAuth" class="capitalize text-[#F2F7F1] bg-[#050E01] py-5 px-10 rounded-full font-medium text-3xl font-inter-tight cursor-pointer">log in</button>
+      </div>
+      <div v-else class="header__user flex items-center gap-6">
+        <h2 class="text-3xl text-[#050E01] font-medium font-inter-tight">Ckutls</h2>
+        <div class="w-14 h-14 bg-amber-950 rounded-xl"></div>
       </div>
     </nav>
   </header>
