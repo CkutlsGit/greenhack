@@ -9,6 +9,11 @@ onMounted(async () => {
     const response = await $fetch(`${ config.public.apikey }/auth/google/callback?code=${ route.query.code }`) 
 
     SetCookie('authtoken', response.authToken)
+
+    const url = { ...route.query }
+    delete url.code
+
+    await route.replace({ query: url })
   }
   else {
     const response = await $fetch(`${ config.public.apikey }/auth/google/url`)
