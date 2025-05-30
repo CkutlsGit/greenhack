@@ -1,5 +1,5 @@
 <script setup>
-// импорт не нужен, Nuxt сам найдёт компонент
+
 </script>
 
 <template>
@@ -8,10 +8,5 @@
   </ClientOnly>
 </template>
 
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
+<style scoped>
 </style>
