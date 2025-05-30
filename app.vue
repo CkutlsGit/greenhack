@@ -3,7 +3,9 @@ import MapWithMarkers from '~/components/MapWithMarkers.vue'
 </script>
 
 <template>
-  <MapWithMarkers />
+  <client-only>
+    <MapWithMarkers />
+  </client-only>
 </template>
 
 <style>

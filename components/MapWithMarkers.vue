@@ -15,6 +15,15 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
+// Исправление путей к иконкам маркеров для продакшна
+// @ts-ignore
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+});
+
 const mapContainer = ref<HTMLElement | null>(null)
 const map = ref<L.Map | null>(null)
 const marker = ref<L.Marker | null>(null)
@@ -67,7 +76,7 @@ async function getLocationInfo(lat: number, lng: number) {
     }
   } catch (error) {
     console.error('Ошибка при получении информации о местоположении:', error)
-    locationInfo.value = 'Ошибка определения местоположения'
+    locationInfo.value = 'Ошибка определения местоположенияв'
   }
 }
 
