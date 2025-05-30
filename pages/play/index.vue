@@ -26,38 +26,43 @@
           >
             <!-- Left Section -->
             <div class="flex-1">
-              <h2 class="text-2xl font-bold mb-4">Rain Village Attacks</h2>
-              <p class="text-base">
-          Hidden Leaf Village, the birthplace of Naruto, the main character, has
-          been attacked by the legendary Hidden Rain Village and is dominating
-          at the moment.
+              <h2 class="text-2xl text-[#050E01] text-3xl font-inter-tight text-3xl  mb-4">Rain Village Attacks</h2>
+              <p class="text-[#bfc2be] font-medium text-2xl font-inter-tight">
+            Hidden Leaf Village, the birthplace of Naruto, the main character, has
+            been attacked by the legendary Hidden Rain Village and is dominating
+            at the moment.
               </p>
             </div>
 
             <!-- Right Section -->
             <div class="flex-1">
-              <h3 class="text-lg font-semibold mb-2">Your Solution</h3>
+              <h3 class="text-3xl text-[#050E01] text-3xl font-inter-tight mb-2">Your Solution</h3>
               <textarea
-              class="w-full h-24 p-3  rounded-md resize-none bg-[#f1f3f0]"
+              class="w-full h-24 p-3 rounded-md resize-none bg-[#f1f3f0] text-[#7e817e] font-medium focus:outline-none focus:ring-0"
               placeholder="Enter your plan"
               ></textarea>
-              <div class="flex justify-between items-center mt-4">
-              <button
-                class="px-4 py-2 bg-[#f1f3f0] rounded-md hover:bg-gray-400"
-              >
-                Skip the AI
-              </button>
-              <div class="text-sm text-gray-500 bg-[#f1f3f0] px-2 py-1 rounded-md">
-                1 / 5
-              </div>
-              <button
-                class="px-4 py-2 bg-[#050e01] text-white rounded-md hover:bg-blue-600"
-              >
-                Enter the answer →
-              </button>
+              <div class="flex items-center mt-4 justify-between space-x-4">
+                <button
+                class="px-4 py-2 bg-[#f1f3f0] text-[#bfc2be] font-inter-tight rounded-lg hover:bg-gray-300 cursor-pointer transition-all duration-200 font-medium text-1xl"
+                >
+                Skip AI
+                </button>
+                <div class="flex-1 flex justify-center">
+                <div class="inline-block text-base bg-[#f1f3f0] text-[#bfc2be] font-inter-tight rounded-lg px-3 py-2">
+                  1 / 5
+                </div>
+                </div>
+                <button
+                class="px-4 py-2 bg-[#050e01] text-white rounded-lg cursor-pointer transition-all duration-200 flex items-center space-x-2"
+                >
+                  <span>Next</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
             </div>
-          </div>
+            </div>
         </div>
       </div>
     </section>
