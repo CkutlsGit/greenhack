@@ -1,6 +1,7 @@
 <script setup>
 const config = useRuntimeConfig()
 const route = useRoute()
+const router = useRouter()
 
 const url = ref('')
 
@@ -13,7 +14,7 @@ onMounted(async () => {
     const url = { ...route.query }
     delete url.code
 
-    await route.replace({ query: url })
+    await router.replace({ query: url })
   }
   else {
     const response = await $fetch(`${ config.public.apikey }/auth/google/url`)
