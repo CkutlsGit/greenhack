@@ -8,7 +8,7 @@ onMounted(async () => {
   if (route.query.code) {
     const response = await $fetch(`${ config.public.apikey }/auth/google/callback?code=${ route.query.code }`) 
 
-    console.log(response)
+    SetCookie('authtoken', response.authToken)
   }
   else {
     const response = await $fetch(`${ config.public.apikey }/auth/google/url`)
