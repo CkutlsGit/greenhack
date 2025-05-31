@@ -1,15 +1,27 @@
 <script setup>
 const gameStore = useGameStore()
 
+// Импортируем звуковые файлы
+import winSound from '@/assets/sounds/sound-effect-win.mp3'
+import failSound from '@/assets/sounds/sound-effect-failure.mp3'
+
 onMounted(() => {
   document.body.style.overflowY = 'hidden'
   
   // Воспроизведение звука в зависимости от результата
   const audio = new Audio()
   audio.src = gameStore.result.survives 
-    ? '/assets/sounds/sound-effect-win.mp3'
-    : '/assets/sounds/sound-effect-failure.mp3'
-  audio.play()
+    ? winSound
+    : failSound
+  
+  // Добавляем обработку ошибок и логирование
+  audio.onerror = (e) => {
+    console.error('Ошибка воспроизведения звука:', e)
+  }
+  
+  audio.play().catch(error => {
+    console.error('Не удалось воспроизвести звук:', error)
+  })
 })
 
 onUnmounted(() => {
