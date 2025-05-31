@@ -3,6 +3,13 @@ const gameStore = useGameStore()
 
 onMounted(() => {
   document.body.style.overflowY = 'hidden'
+  
+  // Воспроизведение звука в зависимости от результата
+  const audio = new Audio()
+  audio.src = gameStore.result.survives 
+    ? '/assets/sounds/sound-effect-win.mp3'
+    : '/assets/sounds/sound-effect-failure.mp3'
+  audio.play()
 })
 
 onUnmounted(() => {
