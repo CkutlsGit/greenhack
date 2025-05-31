@@ -12,6 +12,8 @@ const timeInterval = ref()
 
 const disableNextButton = ref(false)
 
+const loading = ref(false)
+
 onMounted(() => {
   timeFunction()
 })
@@ -38,6 +40,8 @@ const nextStep = async () => {
     text: solutionUser.value
   })
 
+  loading.value = true
+
   const response = await $fetch(`${ config.public.apikey }/ai/evaluate`, {
     method: 'POST',
     body: JSON.stringify({
@@ -60,6 +64,7 @@ const nextStep = async () => {
   console.log(response)
   gameStore.result = response.result
 
+  loading.value = false
   await navigateTo('/chat')
   }
   timeProblem.value = 60
@@ -138,6 +143,7 @@ const nextStep = async () => {
       </div>
     </section>
   </div>
+  <LoaderItemAi v-if="loading" />
 </template>
 
 <style scoped>
