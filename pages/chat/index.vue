@@ -86,6 +86,46 @@ onUnmounted(() => {
         alt="Robot"
         class="robot-icon"
       />
+
+      <!-- Обновленная плашка внизу по центру -->
+      <div 
+        class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-transparent flex items-center justify-between w-[400px]"
+      >
+        <!-- Кнопка "Skip the AI" -->
+        <button 
+          class="text-3xl text-[#050E01] font-inter-tight pl-8 pr-8 bg-gray-200 font-bold text-sm py-2 px-4 rounded-full hover:bg-gray-300 transition"
+        >
+          Skip the AI
+        </button>
+
+        <!-- Текст "1/5" -->
+        <span 
+          class="bg-gray-100 text-black font-medium text-sm py-2 px-4 rounded-full shadow"
+        >
+          1 / 5
+        </span>
+
+        <!-- Кнопка "Next problem ->" -->
+        <button 
+          class=" pl-8 pr-5 bg-black text-2xl text-[#050E01] font-bold text-3xl font-inter-tight text-white font-bold text-sm py-2 px-4 rounded-full hover:bg-gray-800 transition flex items-center"
+        >
+          Next problem 
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke-width="2" 
+            stroke="currentColor" 
+            class="w-4 h-4 ml-2"
+          >
+            <path 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              d="M9 5l7 7-7 7" 
+            />
+          </svg>
+        </button>
+      </div>
     </section>
   </div>
 </template>
@@ -116,5 +156,17 @@ textarea::-webkit-scrollbar-thumb {
 /* Добавляем шрифт font-inter-tight */
 .font-inter-tight {
   font-family: 'Inter', sans-serif;
+}
+
+/* Стили для кнопок */
+button {
+  transition: all 0.3s ease;
+}
+
+/* Стили для текста */
+span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
