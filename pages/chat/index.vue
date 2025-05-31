@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useGameStore } from '@/stores/game'
 
 const gameStore = useGameStore()
@@ -13,35 +13,66 @@ const isLaptop  = ref(false)
 const isDesktop = ref(false)
 const currentProblemIndex = ref(0)
 
+/* speech */
+const synth  = window.speechSynthesis
+const voices = ref<SpeechSynthesisVoice[]>([])
+const speak = (t: string) => {
+  if (!t.trim()) return
+  synth.cancel()
+  const u = new SpeechSynthesisUtterance(t)
+  u.voice =
+    voices.value.find(v => v.lang.startsWith('en') && v.name.includes('Google')) ??
+    voices.value.find(v => v.lang.startsWith('en')) ??
+    voices.value.find(v => v.default)
+  synth.speak(u)
+}
+const speakCurrent = () => {
+  const txt = [evaluations.value[0]?.feedback, evaluations.value[0]?.future]
+    .filter(Boolean)
+    .join('. ')
+  speak(txt)
+}
+
+onMounted(() => {
+  const initVoices = () => {
+    voices.value = synth.getVoices()
+    speakCurrent()
+  }
+  voices.value = synth.getVoices()
+  voices.value.length ? speakCurrent() : (synth.onvoiceschanged = initVoices)
+
+  updateDeviceType()
+  window.addEventListener('resize', updateDeviceType)
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', updateDeviceType)
+  synth.cancel()
+})
+
+watch(currentProblemIndex, i => {
+  const txt = [evaluations.value[i]?.feedback, evaluations.value[i]?.future]
+    .filter(Boolean)
+    .join('. ')
+  speak(txt)
+})
+
 const updateDeviceType = () => {
   const w = window.innerWidth
   isMobile.value  = w <= 768
   isLaptop.value  = w > 768 && w <= 1024
   isDesktop.value = w > 1024
 }
-
-onMounted(() => {
-  updateDeviceType()
-  window.addEventListener('resize', updateDeviceType)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateDeviceType)
-})
 </script>
 
 <template>
   <div class="bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center p-4">
-    <section
-      class="relative w-full max-w-8xl h-[80vh] rounded-[10px] shadow-2xl overflow-hidden"
-    >
+    <section class="relative w-full max-w-8xl h-[80vh] rounded-[10px] shadow-2xl overflow-hidden">
       <img
         src="@/assets/img/storm-img.png"
         alt="Earth"
         class="absolute inset-0 h-full w-full object-contain"
       />
 
-      <!-- Таблица над роботом -->
       <div
         class="absolute bg-white p-4 rounded shadow-lg z-20 w-[400px] h-[150px] flex items-center overflow-hidden"
         :class="{
@@ -58,7 +89,6 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <!-- Диалоговое окно персонажа -->
       <div
         class="absolute top-10 left-10 bg-white p-6 rounded shadow-md z-20 w-[40%] h-[70%] overflow-auto flex flex-col"
       >
@@ -124,7 +154,6 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <!-- Робот в нижнем правом углу -->
       <img
         src="@/assets/img/robot-img.png"
         alt="Robot"
@@ -135,33 +164,11 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-textarea::-webkit-scrollbar {
-  width: 8px;
-}
-textarea::-webkit-scrollbar-track {
-  background: transparent;
-}
-textarea::-webkit-scrollbar-thumb {
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.4);
-}
-.robot-icon {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 500px;
-  height: 500px;
-  z-index: 10;
-}
-.font-inter-tight {
-  font-family: 'Inter', sans-serif;
-}
-button {
-  transition: all 0.3s ease;
-}
-span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+textarea::-webkit-scrollbar { width: 8px; }
+textarea::-webkit-scrollbar-track { background: transparent; }
+textarea::-webkit-scrollbar-thumb { border-radius: 9999px; background: rgba(255, 255, 255, 0.4); }
+.robot-icon { position: absolute; bottom: 10px; right: 10px; width: 500px; height: 500px; z-index: 10; }
+.font-inter-tight { font-family: 'Inter', sans-serif; }
+button { transition: all 0.3s ease; }
+span { display: flex; align-items: center; justify-content: center; }
 </style>
