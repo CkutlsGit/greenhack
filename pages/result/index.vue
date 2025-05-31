@@ -1,4 +1,11 @@
 <script setup lang="ts">
+onMounted(() => {
+  document.body.style.overflowY = 'hidden'
+})
+
+onUnmounted(() => {
+    document.body.style.overflowY = 'unset'
+})
 </script>
 
 <template>
