@@ -33,12 +33,12 @@ const startGameFunction = async () => {
         <h2 class="ml-4 text-[#050E01] font-semibold font-inter-tight text-2xl">{{ mainStore.location }}</h2>
       </div>
       <div class="flex items-start mt-6">
-        <h2 class="text-[#050E01] opacity-50 font-semibold font-inter-tight text-2xl">Location</h2>
+        <h2 class="text-[#050E01] opacity-50 font-semibold font-inter-tight text-2xl">Main Idea</h2>
         <h2 class="ml-4 text-[#050E01] font-semibold font-inter-tight text-2xl">
           {{ mainStore.idea }}
         </h2>
       </div>
-      <div class="flex items-center mt-20">
+      <div class="flex items-center mt-36">
         <img @click="$emit('closeModal')" class="bg-[#050E011A] rounded-full p-5 mr-5 cursor-pointer" src="/public/icons/array-back-icon.svg" />
         <button @click="startGameFunction" :class="{ 'bg-[#050E01] opacity-30' : loading }" :disabled="loading" class="font-inter-tight font-semibold text-[#FDFFFD] text-3xl bg-[#2CAE28] rounded-full p-5 w-full cursor-pointer">Start a journey</button>
       </div>
