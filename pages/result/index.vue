@@ -49,7 +49,7 @@ const clickOnReference = (url) => {
         </h2>
       </div>
       
-      <NuxtLink to="/">
+      <NuxtLink href="https://greenhack-red.vercel.app/">
         <button class="absolute right-20 bottom-10 flex items-center gap-4 text-[#FDFFFD] font-semibold text-3xl py-5 px-8 font-inter-tight bg-[#2CAE28] rounded-full z-[10000] cursor-pointer">
         Return to the lobby
         <img src="@/assets/img/array-forward-icon.svg">
