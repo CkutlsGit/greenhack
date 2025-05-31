@@ -1,20 +1,23 @@
 <script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useGameStore } from '@/stores/game'
 
 const gameStore = useGameStore()
 
 const evaluations = computed(() => gameStore.result?.evaluations ?? [])
-const problems = computed(() => gameStore.result?.problems ?? [])
+const problems    = computed(() => gameStore.result?.problems    ?? [])
+const solutions   = computed(() => gameStore.result?.solutions   ?? [])
 
-const isMobile = ref(false)
-const isLaptop = ref(false)
+const isMobile  = ref(false)
+const isLaptop  = ref(false)
 const isDesktop = ref(false)
 const currentProblemIndex = ref(0)
 
 const updateDeviceType = () => {
-  isMobile.value = window.innerWidth <= 768
-  isLaptop.value = window.innerWidth > 768 && window.innerWidth <= 1024
-  isDesktop.value = window.innerWidth > 1024
+  const w = window.innerWidth
+  isMobile.value  = w <= 768
+  isLaptop.value  = w > 768 && w <= 1024
+  isDesktop.value = w > 1024
 }
 
 onMounted(() => {
@@ -44,13 +47,13 @@ onUnmounted(() => {
         :class="{
           'bottom-[520px] right-[200px]': isDesktop,
           'bottom-[300px] right-[100px]': isLaptop,
-          'bottom-[20px] right-[20px]': isMobile
+          'bottom-[20px]  right-[20px]': isMobile
         }"
       >
         <div class="flex flex-col items-start overflow-y-auto h-full w-full">
-          <span class="text-2xl text-[#050E01] font-bold font-inter-tight mb-2">User tries to...</span>
-          <p class="text-[#a6a9a5] font-bold font-inter-tight">
-            "Привет! Как я могу помочь вам сегодня?"
+          <span class="text-2xl text-[#050E01] font-bold font-inter-tight mb-2">User tries to…</span>
+          <p class="text-[#a6a9a5] font-bold font-inter-tight whitespace-pre-line">
+            {{ solutions[currentProblemIndex]?.text }}
           </p>
         </div>
       </div>
@@ -72,10 +75,19 @@ onUnmounted(() => {
 
         <div class="flex-1 overflow-y-auto space-y-6 pr-2">
           <div v-if="problems.length > 0">
-            <h4 class="text-[#050E01] text-xl font-semibold mb-1">{{ problems[currentProblemIndex].title }}</h4>
-            <p class="text-[#a6a9a5] font-medium text-2xl font-inter-tight ">{{ evaluations[currentProblemIndex]?.feedback }}</p>
-            <p class="text-[#a6a9a5] font-medium text-2xl font-inter-tight mb-4">{{ evaluations[currentProblemIndex]?.future }}</p>
-            <p class="text-[#2CAE28] font-semibold mb-1">Estimation  — {{ evaluations[currentProblemIndex]?.score }} / 100, eco {{ evaluations[currentProblemIndex]?.eco }}</p>
+            <h4 class="text-[#050E01] text-xl font-semibold mb-1">
+              {{ problems[currentProblemIndex].title }}
+            </h4>
+            <p class="text-[#a6a9a5] font-medium text-2xl font-inter-tight">
+              {{ evaluations[currentProblemIndex]?.feedback }}
+            </p>
+            <p class="text-[#a6a9a5] font-medium text-2xl font-inter-tight mb-4">
+              {{ evaluations[currentProblemIndex]?.future }}
+            </p>
+            <p class="text-[#2CAE28] font-semibold mb-1">
+              Estimation — {{ evaluations[currentProblemIndex]?.score }} / 100,
+              eco {{ evaluations[currentProblemIndex]?.eco }}
+            </p>
           </div>
         </div>
 
