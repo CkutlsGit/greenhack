@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useGameStore } from '@/stores/game'
 
 const gameStore = useGameStore()
@@ -12,6 +11,7 @@ const isMobile  = ref(false)
 const isLaptop  = ref(false)
 const isDesktop = ref(false)
 const currentProblemIndex = ref(0)
+const redirectStep = 4 // 0‑based index: шаг 5
 
 /* speech */
 const synth  = window.speechSynthesis
@@ -26,8 +26,9 @@ const speak = (t: string) => {
     voices.value.find(v => v.default)
   synth.speak(u)
 }
+
 const speakCurrent = () => {
-  const txt = [evaluations.value[0]?.feedback, evaluations.value[0]?.future]
+  const txt = [evaluations.value[currentProblemIndex.value]?.feedback, evaluations.value[currentProblemIndex.value]?.future]
     .filter(Boolean)
     .join('. ')
   speak(txt)
@@ -44,6 +45,7 @@ onMounted(() => {
   updateDeviceType()
   window.addEventListener('resize', updateDeviceType)
 })
+
 onUnmounted(() => {
   window.removeEventListener('resize', updateDeviceType)
   synth.cancel()
@@ -55,6 +57,22 @@ watch(currentProblemIndex, i => {
     .join('. ')
   speak(txt)
 })
+
+const isLastStep = computed(() => currentProblemIndex.value === redirectStep)
+
+const goNext = async () => {
+  if (isLastStep.value) {
+    await navigateTo('/result')
+    return
+  }
+  if (currentProblemIndex.value < problems.value.length - 1) {
+    currentProblemIndex.value++
+  }
+}
+
+const goPrev = () => {
+  if (currentProblemIndex.value > 0) currentProblemIndex.value--
+}
 
 const updateDeviceType = () => {
   const w = window.innerWidth
@@ -73,6 +91,7 @@ const updateDeviceType = () => {
         class="absolute inset-0 h-full w-full object-contain"
       />
 
+      <!-- bubble with solution text -->
       <div
         class="absolute bg-white p-4 rounded shadow-lg z-20 w-[400px] h-[150px] flex items-center overflow-hidden"
         :class="{
@@ -89,6 +108,7 @@ const updateDeviceType = () => {
         </div>
       </div>
 
+      <!-- main card with evaluation -->
       <div
         class="absolute top-10 left-10 bg-white p-6 rounded shadow-md z-20 w-[40%] h-[70%] overflow-auto flex flex-col"
       >
@@ -122,24 +142,27 @@ const updateDeviceType = () => {
         </div>
 
         <div class="mt-4 flex items-center justify-between">
+          <!-- Previous -->
           <button
             class="text-4xl text-[#050E01] font-inter-tight pl-10 pr-10 bg-gray-200 font-bold text-lg py-4 px-6 rounded-full hover:bg-gray-300 transition"
             :disabled="currentProblemIndex === 0"
-            @click="currentProblemIndex--"
+            @click="goPrev"
           >
             Previous
           </button>
 
+          <!-- counter -->
           <span class="text-green-500 font-bold text-2xl text-[#050E01] font-inter-tight">
             {{ currentProblemIndex + 1 }} / {{ problems.length }}
           </span>
 
+          <!-- Next / Result -->
           <button
             class="pl-10 pr-8 bg-black text-4xl text-[#050E01] font-bold text-lg font-inter-tight text-white py-4 px-6 rounded-full hover:bg-gray-800 transition flex items-center"
-            :disabled="currentProblemIndex === problems.length - 1"
-            @click="currentProblemIndex++"
+            :disabled="currentProblemIndex === problems.length - 1 && !isLastStep"
+            @click="goNext"
           >
-            Next
+            {{ isLastStep ? 'Result' : 'Next' }}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
