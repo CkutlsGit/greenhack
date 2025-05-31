@@ -39,7 +39,7 @@ const startGameFunction = async () => {
         </h2>
       </div>
     </div>
-    <div class=" absolute bottom-50 w-[600px] bg-[#FDFFFD] py-6 rounded-full px-10 z-[100000] flex items-center justify-center">
+    <div class=" absolute bottom-40 w-[600px] bg-[#FDFFFD] py-6 rounded-full px-10 z-[100000] flex items-center justify-center">
       <img @click="$emit('closeModal')" class="bg-[#050E011A] rounded-full p-5 mr-5 cursor-pointer" src="/public/icons/array-back-icon.svg" />
       <button @click="startGameFunction" :class="{ 'bg-[#050E01] opacity-30' : loading }" :disabled="loading" class="font-inter-tight font-semibold text-[#FDFFFD] text-3xl bg-[#2CAE28] rounded-full p-5 w-full cursor-pointer">Start a journey</button>
     </div>
