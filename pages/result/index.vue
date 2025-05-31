@@ -44,7 +44,7 @@
             </li>
           </ul>
         </div>
-        <a href="https://ru.wikipedia.org/wiki/Заглавная_страница" class="relative z-[10000] top-7 p-6 bg-[#FDFFFD] rounded-3xl text-[#2167E0] text-3xl font-collvetica w-[700px]">An example of a real project that delivered results</a>
+        <h2 href="https://ru.wikipedia.org/wiki/Заглавная_страница" class="absolute z-[10000] bottom-24 p-6 bg-[#FDFFFD] rounded-3xl text-[#2167E0] text-3xl font-collvetica w-[700px]">An example of a real project that delivered results</h2>
         <h2 class="absolute z-[10000] bottom-2 p-2 bg-[#FDFFFD] rounded-3xl text-[#050E01] text-3xl font-collvetica w-[500px] flex items-center">
           <img class="mr-6" src="@/assets/img/icon-heart.svg">
           Your startup survived!
