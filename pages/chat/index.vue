@@ -9,6 +9,7 @@ const problems = computed(() => gameStore.result?.problems ?? [])
 const isMobile = ref(false)
 const isLaptop = ref(false)
 const isDesktop = ref(false)
+const currentProblemIndex = ref(0)
 
 const updateDeviceType = () => {
   isMobile.value = window.innerWidth <= 768
@@ -70,19 +71,44 @@ onUnmounted(() => {
         </div>
 
         <div class="flex-1 overflow-y-auto space-y-6 pr-2">
-          <div v-for="(problem, idx) in problems" :key="idx" class="border-b pb-4 last:border-b-0">
-            <h4 class="text-[#050E01] text-xl font-semibold mb-1">{{ problem.title }}</h4>
-            <p class="text-[#4d524d] text-base mb-2">{{ problem.description }}</p>
-            <template v-if="evaluations[idx]">
-              <p class="text-[#2CAE28] font-semibold mb-1">Оценка — {{ evaluations[idx].score }} / 100, eco {{ evaluations[idx].eco }}</p>
-              <p class="text-[#050E01] text-base mb-1">{{ evaluations[idx].feedback }}</p>
-              <p class="text-[#a6a9a5] text-sm">{{ evaluations[idx].future }}</p>
-            </template>
+          <div v-if="problems.length > 0">
+            <h4 class="text-[#050E01] text-xl font-semibold mb-1">{{ problems[currentProblemIndex].title }}</h4>
+            <p class="text-[#a6a9a5] font-medium text-2xl font-inter-tight ">{{ evaluations[currentProblemIndex]?.feedback }}</p>
+            <p class="text-[#a6a9a5] font-medium text-2xl font-inter-tight mb-4">{{ evaluations[currentProblemIndex]?.future }}</p>
+            <p class="text-[#2CAE28] font-semibold mb-1">Estimation  — {{ evaluations[currentProblemIndex]?.score }} / 100, eco {{ evaluations[currentProblemIndex]?.eco }}</p>
           </div>
         </div>
 
-        <div class="mt-4 flex items-center justify-end">
-          <span class="text-green-500 font-bold text-2xl text-[#050E01] font-inter-tight">+10 pts</span>
+        <div class="mt-4 flex items-center justify-between">
+          <button
+            class="text-4xl text-[#050E01] font-inter-tight pl-10 pr-10 bg-gray-200 font-bold text-lg py-4 px-6 rounded-full hover:bg-gray-300 transition"
+            :disabled="currentProblemIndex === 0"
+            @click="currentProblemIndex--"
+          >
+            Previous
+          </button>
+
+          <span class="text-green-500 font-bold text-2xl text-[#050E01] font-inter-tight">
+            {{ currentProblemIndex + 1 }} / {{ problems.length }}
+          </span>
+
+          <button
+            class="pl-10 pr-8 bg-black text-4xl text-[#050E01] font-bold text-lg font-inter-tight text-white py-4 px-6 rounded-full hover:bg-gray-800 transition flex items-center"
+            :disabled="currentProblemIndex === problems.length - 1"
+            @click="currentProblemIndex++"
+          >
+            Next
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="w-6 h-6 ml-3"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -92,39 +118,6 @@ onUnmounted(() => {
         alt="Robot"
         class="robot-icon"
       />
-
-      <!-- Плашка внизу по центру -->
-      <div
-        class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-transparent flex items-center justify-between w-[500px]"
-      >
-        <button
-          class="text-4xl text-[#050E01] font-inter-tight pl-10 pr-10 bg-gray-200 font-bold text-lg py-4 px-6 rounded-full hover:bg-gray-300 transition"
-        >
-          Skip the AI
-        </button>
-
-        <span
-          class="bg-gray-100 text-black font-medium text-lg py-3 px-6 rounded-full shadow"
-        >
-          1 / 5
-        </span>
-
-        <button
-          class="pl-10 pr-8 bg-black text-4xl text-[#050E01] font-bold text-lg font-inter-tight text-white py-4 px-6 rounded-full hover:bg-gray-800 transition flex items-center"
-        >
-          Next problem
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            class="w-6 h-6 ml-3"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
     </section>
   </div>
 </template>
