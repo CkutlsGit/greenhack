@@ -4,7 +4,7 @@
 <template>
   <section class=" bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center p-4">
     <div
-      class="relative w-full max-w-8xl h-[80vh] rounded-[10px] shadow-2xl overflow-hidden"
+      class="relative w-full max-w-8xl h-[90vh] rounded-[10px] shadow-2xl overflow-hidden"
     >
       <img
         src="@/assets/img/storm-img.png"
@@ -44,8 +44,8 @@
             </li>
           </ul>
         </div>
-        <h2 href="https://ru.wikipedia.org/wiki/Заглавная_страница" class="absolute z-[10000] bottom-24 p-6 bg-[#FDFFFD] rounded-3xl text-[#2167E0] text-3xl font-collvetica w-[700px]">An example of a real project that delivered results</h2>
-        <h2 class="absolute z-[10000] bottom-2 p-2 bg-[#FDFFFD] rounded-3xl text-[#050E01] text-3xl font-collvetica w-[500px] flex items-center">
+        <h2 class="relative z-[10000] mt-4 p-6 bg-[#FDFFFD] rounded-3xl text-[#2167E0] text-3xl font-collvetica w-[700px]">An example of a real project that delivered results</h2>
+        <h2 class="relative z-[10000] mt-2 p-2 bg-[#FDFFFD] rounded-3xl text-[#050E01] text-3xl font-collvetica w-[500px] flex items-center">
           <img class="mr-6" src="@/assets/img/icon-heart.svg">
           Your startup survived!
         </h2>
