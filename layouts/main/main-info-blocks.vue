@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="bg-[#F289381A] p-6 rounded-3xl mt-4">
-          <img class="w-24" src="@/assets/img/icon-town-orange.svg" />
+          <img class="w-24" src="@/assets/img/icon-img.svg" />
           <p class="text-3xl font-medium font-inter-tight text-[#E57620] mt-6">
             Choosing different location countries for business conditions
           </p>
