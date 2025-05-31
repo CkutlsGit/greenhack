@@ -51,7 +51,7 @@ const googleAuth = () => {
 <template>
   <header class="header bg-[#FDFFFD] border-b-2 border-[#050E011A]">
     <nav class="header__content flex items-center justify-between py-7 px-16">
-      <div class="header__logo">
+      <div class="header__logo cursor-pointer" @click="router.push('/')">
         <h1 class="text-[#050E0154] text-3xl font-collvetica leading-5">
           Death By <br>
           <span class="text-[#2CAE28] text-4xl">AI CO Founder</span>
