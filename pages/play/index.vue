@@ -61,7 +61,7 @@ const nextStep = async () => {
       ]
     })
   })
-  console.log(response)
+  console.log(response.result)
   gameStore.result = response.result
 
   loading.value = false
