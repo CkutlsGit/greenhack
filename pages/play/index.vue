@@ -105,7 +105,7 @@ const nextStep = async () => {
 
             <!-- Right Section -->
             <div class="flex-1">
-              <h3 class="text-3xl text-[#050E01] font-inter-tight mb-2">Your Solution</h3>
+              <h3 class="text-3xl text-[#050E01] font-inter-tight mb-2">Enter your survival strategy</h3>
               <textarea
               class="w-full h-24 p-3 rounded-md resize-none bg-[#f1f3f0] text-[#7e817e] font-medium focus:outline-none focus:ring-0"
               placeholder="Enter your plan" v-model="solutionUser"
