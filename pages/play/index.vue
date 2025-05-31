@@ -42,6 +42,7 @@ const nextStep = async () => {
     method: 'POST',
     body: JSON.stringify({
       startupInitDto: {
+        authToken: GetCookie('authtoken'),
         location: mainStore.location,
         projectName: mainStore.projectName,
         idea: mainStore.idea

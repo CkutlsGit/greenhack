@@ -68,6 +68,9 @@ onUnmounted(() => {
     </h3>
     </div>
     <div class="flex-1 overflow-y-auto">
+        <h2 class="text-2xl text-[#050E01]  font-bold text-3xl font-inter-tight mb-4">
+            Помощь 
+        </h2>
       <p class="text-[#a6a9a5] font-medium text-2xl font-inter-tight mb-4">
         Привет! Я здесь, чтобы помочь вам. Если у вас есть вопросы, просто задавайте их, и я постараюсь ответить.
         Привет! Я здесь, чтобы помочь вам. Если у вас есть вопросы, просто задавайте их, и я постараюсь ответить.
