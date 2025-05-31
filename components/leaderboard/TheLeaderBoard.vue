@@ -46,6 +46,9 @@ onMounted(async () => {
     >
     <LeaderboardLeaderBoardItem v-for="(user, index) of leaderboardData.entries" :key="user.user.id" :user="user" :place="index + 1" />
     </ul>
+    <div v-else class="absolute right-80 mt-16">
+      <LoaderItem />
+    </div>
   </article>
 </template>
 

@@ -4,7 +4,10 @@ const config = useRuntimeConfig()
 const mainStore = useMainStore()
 const gameStore = useGameStore()
 
+const loading = ref(false)
+
 const startGameFunction = async () => {
+  loading.value = true
   const response = await $fetch(`${ config.public.apikey }/ai/start`, {
     method: 'POST',
     body: JSON.stringify({
@@ -15,6 +18,8 @@ const startGameFunction = async () => {
   })
 
   gameStore.problems = response.result.problems
+  loading.value = false
+
   await navigateTo('/play')
 }
 </script>
@@ -35,10 +40,11 @@ const startGameFunction = async () => {
       </div>
       <div class="flex items-center mt-20">
         <img @click="$emit('closeModal')" class="bg-[#050E011A] rounded-full p-5 mr-5 cursor-pointer" src="/public/icons/array-back-icon.svg" />
-        <button @click="startGameFunction" class="font-inter-tight font-semibold text-[#FDFFFD] text-3xl bg-[#2CAE28] rounded-full p-5 w-full cursor-pointer">Start a journey</button>
+        <button @click="startGameFunction" :class="{ 'bg-[#050E01] opacity-30' : loading }" :disabled="loading" class="font-inter-tight font-semibold text-[#FDFFFD] text-3xl bg-[#2CAE28] rounded-full p-5 w-full cursor-pointer">Start a journey</button>
       </div>
     </div>
   </div>
+  <LoaderItemAi v-if="loading" />
 </template>
 
 <style></style>

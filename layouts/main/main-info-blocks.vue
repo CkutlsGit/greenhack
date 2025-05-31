@@ -6,7 +6,7 @@
       <div class="bg-[#FDFFFD] p-6 rounded-3xl min-w-[1000px]">
         <h1 class="text-4xl font-collvetica mb-6">AI Futures</h1>
         <div class="flex items-center gap-4">
-          <div class="bg-[#387BDB1A] p-6 rounded-3xl">
+          <div class="bg-[#387BDB1A] p-6 rounded-3xl w-3/5">
             <img class="w-24" src="@/assets/img/icon-town.svg" />
             <p
               class="text-3xl font-medium font-inter-tight text-[#387BDB] mt-6"
@@ -14,7 +14,7 @@
               Problems based on local legislation
             </p>
           </div>
-          <div class="bg-[#2CAE281A] p-6 rounded-3xl">
+          <div class="bg-[#2CAE281A] p-6 rounded-3xl w-1/2">
             <img class="w-24" src="@/assets/img/icon-computer.svg" />
             <p
               class="text-3xl font-medium font-inter-tight text-[#2CAE28] mt-6"

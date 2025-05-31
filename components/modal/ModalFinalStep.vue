@@ -6,6 +6,14 @@ const modalNext = ref(false)
 const nameStartUp = ref('')
 const ideaStartUp = ref('')
 
+onMounted(() => {
+  document.body.style.overflowY = 'hidden'
+})
+
+onUnmounted(() => {
+    document.body.style.overflowY = 'unset'
+})
+
 const confirmModalData = () => {
   mainStore.projectName = nameStartUp.value
   mainStore.idea = ideaStartUp.value
