@@ -13,11 +13,18 @@ const isDesktop = ref(false)
 const currentProblemIndex = ref(0)
 const redirectStep = 4 // 0‑based index: шаг 5
 
+const isSoundEnabled = ref(true)
+
+const toggleSound = () => {
+  isSoundEnabled.value = !isSoundEnabled.value
+  if (!isSoundEnabled.value) synth.cancel() // Stop sound immediately when toggled off
+}
+
 /* speech */
 const synth  = window.speechSynthesis
 const voices = ref<SpeechSynthesisVoice[]>([])
 const speak = (t: string) => {
-  if (!t.trim()) return
+  if (!isSoundEnabled.value || !t.trim()) return
   synth.cancel()
   const u = new SpeechSynthesisUtterance(t)
   u.voice =
@@ -90,6 +97,32 @@ const updateDeviceType = () => {
         alt="Earth"
         class="absolute inset-0 h-full w-full object-contain"
       />
+
+      <div class="absolute top-4 right-4 z-30">
+        <button
+          @click="toggleSound"
+          class="bg-gray-200 p-3 rounded-full shadow-md hover:bg-gray-300 transition flex items-center justify-center"
+        >
+          <svg
+            v-if="isSoundEnabled"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-8 h-8 text-green-500"
+          >
+            <path d="M11.707 3.293a1 1 0 00-1.414 0L6 7.586H3a1 1 0 00-1 1v6a1 1 0 001 1h3l4.293 4.293a1 1 0 001.414 0V3.293zM16.5 8.5a1 1 0 011.415 0 5.5 5.5 0 010 7.778 1 1 0 01-1.415-1.414 3.5 3.5 0 000-4.95 1 1 0 010-1.414zM19.5 5.5a1 1 0 011.415 0 9.5 9.5 0 010 13.435 1 1 0 01-1.415-1.414 7.5 7.5 0 000-10.607 1 1 0 010-1.414z" />
+          </svg>
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-8 h-8 text-red-500"
+          >
+            <path d="M11.707 3.293a1 1 0 00-1.414 0L6 7.586H3a1 1 0 00-1 1v6a1 1 0 001 1h3l4.293 4.293a1 1 0 001.414 0V3.293zM21 12a1 1 0 01-1 1h-6a1 1 0 110-2h6a1 1 0 011 1z" />
+          </svg>
+        </button>
+      </div>
 
       <!-- bubble with solution text -->
       <div
